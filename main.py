@@ -1,5 +1,6 @@
-import customtkinter
+import tkinter
 
+import customtkinter
 
 # customtkinter apperance and color theme
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
@@ -102,7 +103,8 @@ class App(customtkinter.CTk):
         self.calculator_frame.grid_columnconfigure((0, 1, 2, 3), weight=1, uniform="column")
 
         # calculator display
-        self.calculator_display = customtkinter.CTkEntry(self.calculator_frame, textvariable=input_text)
+        self.calculator_display = customtkinter.CTkEntry(self.calculator_frame, textvariable=input_text,
+                                                         font=("Arial", 25), justify=tkinter.RIGHT)
         self.calculator_display.grid(row=0, column=0, columnspan=4, padx=5, pady=(30, 10), sticky="nsew")
         self.calculator_display.configure(state="disabled", height=40)
 
