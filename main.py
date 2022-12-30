@@ -1,5 +1,4 @@
 import tkinter
-
 import customtkinter
 
 # customtkinter apperance and color theme
@@ -15,7 +14,7 @@ class App(customtkinter.CTk):
         numeric_buttons_color = '#3797FF'
 
         # window configuration
-        self.title("CCA - Calculator & Convert App")
+        self.title("Handy App\nv1.02")
         self.geometry(f"{650}x{580}")
 
         # set grid layout 1x2
@@ -29,7 +28,7 @@ class App(customtkinter.CTk):
 
         # navigation label
         self.navigation_frame_label = customtkinter.CTkLabel(self.navigation_frame,
-                                                             text="Calculate & Convert\nApplication",
+                                                             text="Handy App\nv1.02",
                                                              font=customtkinter.CTkFont(size=15, weight="bold"))
         self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
 
@@ -50,17 +49,18 @@ class App(customtkinter.CTk):
                                                        command=self.contacts_button_event)
         self.contacts_button.grid(row=2, column=0, sticky="ew")
 
-        self.frame_3_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40,
-                                                      border_spacing=10, text="Frame 3",
-                                                      fg_color="transparent", text_color=("gray10", "gray90"),
-                                                      hover_color=("gray70", "gray30"), anchor="w",
-                                                      command=self.frame_3_button_event)
-        self.frame_3_button.grid(row=3, column=0, sticky="ew")
-
-        self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
-                                                                values=["Light", "Dark", "System"],
-                                                                command=self.change_appearance_mode_event)
-        self.appearance_mode_menu.grid(row=6, column=0, padx=20, pady=20, sticky="s")
+        """ preparation for frame 3"""
+        # self.frame_3_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40,
+        #                                               border_spacing=10, text="Frame 3",
+        #                                               fg_color="transparent", text_color=("gray10", "gray90"),
+        #                                               hover_color=("gray70", "gray30"), anchor="w",
+        #                                               command=self.frame_3_button_event)
+        # self.frame_3_button.grid(row=3, column=0, sticky="ew")
+        #
+        # self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame,
+        #                                                         values=["Light", "Dark", "System"],
+        #                                                         command=self.change_appearance_mode_event)
+        # self.appearance_mode_menu.grid(row=6, column=0, padx=20, pady=20, sticky="s")
 
         """CALCULATOR FRAME"""
         # functions first
@@ -74,9 +74,13 @@ class App(customtkinter.CTk):
         # present in input field
         def btn_equal():
             nonlocal expression
-            result = str(eval(expression))  # 'eval':This function is used to evaluates the string expression directly
+            result = str(eval(expression))
+            history = expression + f" = {result}\n"  # this is for history output
+            self.calculator_history.insert("0.0", history) # this is for history output
+            print(history)
             input_text.set(result)
             expression = result
+
 
         # this metod clear entry input
         def btn_clear():
@@ -84,7 +88,7 @@ class App(customtkinter.CTk):
             expression = ""
             input_text.set("")
 
-        # this metod delete single character from entry input
+        # this method delete single character from entry input
         def btn_delete():
             nonlocal expression
             expression = expression[:-1]
@@ -94,13 +98,13 @@ class App(customtkinter.CTk):
         expression = ""
 
         # StringVar() is the variable class
-        # we create an instance of this class
         input_text = customtkinter.StringVar()
 
         # create calculator frame
         self.calculator_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.calculator_frame.grid_rowconfigure((1, 2, 3, 4, 5), weight=0, uniform="row")
         self.calculator_frame.grid_columnconfigure((0, 1, 2, 3), weight=1, uniform="column")
+        self.calculator_frame.grid_rowconfigure((6, 7), weight=1)
 
         # calculator display
         self.calculator_display = customtkinter.CTkEntry(self.calculator_frame, textvariable=input_text,
@@ -217,11 +221,20 @@ class App(customtkinter.CTk):
                                                                        )
         self.calculator_frame_button_decimal.grid(row=5, column=2, padx=2, pady=2, sticky="nsew")
 
+        # history of calculator use
+        self.calculator_history = customtkinter.CTkTextbox(self.calculator_frame)
+        self.calculator_history.grid(row=7, column=1, columnspan=2, pady=(0,50), sticky="nsew")
+
+        #label of history
+        self.calculator_history_label = customtkinter.CTkLabel(self.calculator_frame, text="History")
+        self.calculator_history_label.grid(row=6, column=1, columnspan=2, sticky="nsew")
+
         # create second frame
         self.second_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
 
+        """ preparation for 3 frame """
         # create third frame
-        self.third_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        # self.third_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
 
         # select default frame
         self.select_frame_by_name("calculator")
@@ -230,7 +243,8 @@ class App(customtkinter.CTk):
         # set button color for selected button
         self.calculator_button.configure(fg_color=("gray75", "gray25") if name == "calculator" else "transparent")
         self.contacts_button.configure(fg_color=("gray75", "gray25") if name == "contacts" else "transparent")
-        self.frame_3_button.configure(fg_color=("gray75", "gray25") if name == "frame_3" else "transparent")
+        """ preparation for 3 frame """
+        # self.frame_3_button.configure(fg_color=("gray75", "gray25") if name == "frame_3" else "transparent")
 
         # show selected frame
         if name == "calculator":
@@ -241,10 +255,11 @@ class App(customtkinter.CTk):
             self.second_frame.grid(row=0, column=1, sticky="nsew")
         else:
             self.second_frame.grid_forget()
-        if name == "frame_3":
-            self.third_frame.grid(row=0, column=1, sticky="nsew")
-        else:
-            self.third_frame.grid_forget()
+        """ preparation for 3 frame """
+        # if name == "frame_3":
+        #     self.third_frame.grid(row=0, column=1, sticky="nsew")
+        # else:
+        #     self.third_frame.grid_forget()
 
     def calculator_button_event(self):
         self.select_frame_by_name("calculator")

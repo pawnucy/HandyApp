@@ -6,5 +6,8 @@ Version 2.0 will be expanded to include a collection of contacts (ability to add
 
 Changelog:
 
-v1.0 - 29.12.2022 - release of the basic version of the application
-v1.1 - 29.12.2022 - change font size and justify to the right calculator display
+v1.0 - 29.12.2022 - release of the basic version of the application.
+
+v1.01 - 29.12.2022 - change font size and justify to the right calculator display.
+
+v.02 - 30.12.2022 - added function of operation history on the calculator.
